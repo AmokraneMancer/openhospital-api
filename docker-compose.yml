@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  database:
+    container_name: database
+    restart: always
+    command: --lower_case_table_names=1
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_PASSWORD=root"
+      - "MYSQL_USER=user"
+      - "MYSQL_DATABASE=user"
+    build:
+       context: .
+       dockerfile: Dockerfile.database
+       args:
+        OH_CORE_BRANCH: develop
+        GITHUB_ORG: intesys
+
+    ports:
+      - "3306:3306"
+  backend:
+    container_name: backend
+    build:
+       context: .
+       dockerfile: Dockerfile.backend
+       args:
+        API_VERSION: 2.0
+        OH_CORE_BRANCH: develop
+        OH_API_BRANCH: develop
+        GITHUB_ORG: intesys
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "100m"
+            max-file: "10"
+  
