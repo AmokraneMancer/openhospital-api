@@ -5,32 +5,31 @@ services:
     restart: always
     command: --lower_case_table_names=1
     environment:
-      - "MYSQL_ROOT_PASSWORD=root"
-      - "MYSQL_PASSWORD=root"
-      - "MYSQL_USER=user"
-      - "MYSQL_DATABASE=user"
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      - "MYSQL_USER=${MYSQL_USER}"
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
     build:
        context: .
        dockerfile: Dockerfile.database
        args:
-        OH_CORE_BRANCH: develop
-        GITHUB_ORG: intesys
-
+        OH_CORE_BRANCH: ${OH_CORE_BRANCH}
+        GITHUB_ORG: ${GITHUB_ORG}
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
   backend:
     container_name: backend
     build:
        context: .
        dockerfile: Dockerfile.backend
        args:
-        API_VERSION: 2.0
-        OH_CORE_BRANCH: develop
-        OH_API_BRANCH: develop
-        GITHUB_ORG: intesys
+        API_VERSION: ${API_VERSION}
+        OH_CORE_BRANCH: ${OH_CORE_BRANCH}
+        OH_API_BRANCH: ${OH_API_BRANCH}
+        GITHUB_ORG: ${GITHUB_ORG}
     restart: always
     ports:
-      - "8080:8080"
+      - "${API_PORT}:8080"
     depends_on:
       - database
     logging:
