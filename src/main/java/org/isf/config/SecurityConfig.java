@@ -204,7 +204,7 @@ public class SecurityConfig {
 						.antMatchers(HttpMethod.DELETE, "/diseases/**").hasAuthority("admin").antMatchers(HttpMethod.GET, "/diseases/**")
 						.hasAnyAuthority("admin", "guest").and()
 //			.formLogin()
-//				 .loginPage("/auth/login")
+//				 .loginPage("/")
 //				 .successHandler(successHandler())
 //				 .failureHandler(failureHandler())
 //			.and()
