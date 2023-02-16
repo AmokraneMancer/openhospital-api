@@ -145,10 +145,10 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <!-- <release>${java.version}</release> -->
-                    <source>1.8</source>
+                    <release>${java.version}</release>
+                    <!-- <source>1.8</source>
 					<target>1.8</target>
-					<verbose>true</verbose>
+					<verbose>true</verbose> -->
                 </configuration>
             </plugin>
             <plugin>
